@@ -18,9 +18,9 @@ const Home = () => {
             <Collaborator/>
             <FeaturedClasses/>
             <ExtraSection/>
-            <WebsiteStats/>
             <FeedbackSection/>
             <InspireTeachers/>
+            <WebsiteStats/>
         </div>
     );
 };

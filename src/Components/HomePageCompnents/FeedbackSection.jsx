@@ -37,7 +37,7 @@ const FeedbackSection = () => {
   }
 
   return (
-    <section className="py-12 px-4 bg-base-100 rounded-2xl shadow-lg max-w-6xl mx-auto">
+    <section className="py-12 px-4 bg-base-100 rounded-2xl max-w-6xl mx-auto">
       <h2 className="text-3xl font-bold mb-8 text-center">What Students Say</h2>
       <Swiper
         spaceBetween={20}

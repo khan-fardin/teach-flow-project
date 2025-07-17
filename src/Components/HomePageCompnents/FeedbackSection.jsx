@@ -37,7 +37,7 @@ const FeedbackSection = () => {
   }
 
   return (
-    <section className="py-12 px-4 bg-base-100 rounded-lg shadow-lg max-w-6xl mx-auto">
+    <section className="py-12 px-4 bg-base-100 rounded-2xl shadow-lg max-w-6xl mx-auto">
       <h2 className="text-3xl font-bold mb-8 text-center">What Students Say</h2>
       <Swiper
         spaceBetween={20}
@@ -49,7 +49,7 @@ const FeedbackSection = () => {
         }}
       >
         {feedbacks.map(({ _id, userName, userPhoto, classTitle, comment, rating }) => (
-          <SwiperSlide key={_id} className="bg-white p-6 rounded-lg shadow-md">
+          <SwiperSlide key={_id} className="bg-white p-6 rounded-lg shadow-md my-2">
             <div className="flex items-center gap-4 mb-4">
               <img
                 src={userPhoto}

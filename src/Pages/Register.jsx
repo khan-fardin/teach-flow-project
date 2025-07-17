@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import useAxios from '../hooks/useAxios';
+import Logo from '../Components/Shared/Logo';
 
 const Register = () => {
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
@@ -93,14 +94,14 @@ const Register = () => {
         <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center p-5 bg-base-200">
             {/* Image Section */}
             <div className="w-full lg:w-1/2 flex justify-center items-center mb-8 lg:mb-0">
-                <img src="https://img.freepik.com/free-photo/3d-render-secure-login-password-illustration_107791-16640.jpg?t=st=1752055695~exp=1752059295~hmac=59dc390f6b0c10894182cf634fb96e803c3a81973fd3fd9c5753288c64c148b2&w=826" alt="Register Illustration" className="w-full max-w-lg" />
+                <img src="https://img.freepik.com/premium-vector/register-now-speech-bubble-collection-iconlabel-sticker-logo-badge-banner-design-template_359398-2303.jpg?w=826" alt="Register Illustration" className="w-full max-w-lg rounded-2xl max-lg:hidden" />
             </div>
 
             {/* Form Section */}
             <div className="w-full lg:w-1/2 max-w-md bg-white p-8 rounded-2xl shadow-xl">
                 {/* Logo and Intro */}
-                <div className="text-center mb-6">
-                    <h1 className="text-3xl font-bold text-primary">EduSpark</h1>
+                <div className="flex flex-col items-center space-y-2.5 text-center mb-6">
+                    <Logo/>
                     <p className="text-sm text-gray-600">Join Our Teaching Community</p>
                 </div>
 

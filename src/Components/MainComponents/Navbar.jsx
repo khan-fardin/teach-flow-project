@@ -4,6 +4,7 @@ import { Link, NavLink } from 'react-router';
 import menuIcon from '../../assets/menu-icon.png';
 import useAuth from '../../hooks/useAuth';
 import { Bounce, toast } from 'react-toastify';
+import { FaUser } from 'react-icons/fa6';
 
 const Navbar = () => {
 
@@ -91,13 +92,13 @@ const Navbar = () => {
                                     <div className="w-10 rounded-full">
                                         <img
                                             alt="Tailwind CSS Navbar component"
-                                            src={user.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} />
+                                            src={user.photoURL || "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?t=st=1752771961~exp=1752775561~hmac=b310ab1693213a8ae34dc7e50618b5d2ebd5f6741f8e0ab005eeabf08ecb503a&w=826"} />
                                     </div>
                                 </div>
                                 <ul
                                     tabIndex={0}
                                     className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow space-y-2.5">
-                                    <li><a className='text-xl font-medium'>{user.displayName}</a></li>
+                                    <li><a className='text-xl font-medium flex items-center gap-2.5'><FaUser /> {user.displayName}</a></li>
                                     <li><Link to='/dashboard' className='btn'>Dashboard</Link></li>
                                     <li><div onClick={handleLogout} className='btn btn-error'>Logout</div></li>
                                 </ul>

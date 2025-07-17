@@ -3,7 +3,6 @@ import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { FaUser, FaEnvelope, FaUserShield } from 'react-icons/fa';
-import { FaWatchmanMonitoring } from 'react-icons/fa6';
 
 const Profile = () => {
     const { user, loading } = useAuth();

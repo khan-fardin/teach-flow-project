@@ -9,10 +9,10 @@ const StudentRoute = ({ children }) => {
     const location = useLocation();
 
     if (loading || adminLoading) {
-        return <div className="text-center py-10">Checking teacher access...</div>;
+        return <div className="text-center py-10">Checking student access...</div>;
     }
 
-    if (user && isAdmin === "teacher") {
+    if (user && isAdmin === "student") {
         return children;
     }
 

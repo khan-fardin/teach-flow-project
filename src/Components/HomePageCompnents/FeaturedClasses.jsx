@@ -19,7 +19,7 @@ const FeaturedClasses = () => {
     }
 
     return (
-        <section className="py-12 px-4 bg-base-200 text-primary">
+        <section className="py-12 px-4 bg-base-200 rounded-2xl">
             <h2 className="text-3xl font-bold text-center mb-6">Popular Classes</h2>
 
             <div className="overflow-x-auto flex">
@@ -35,15 +35,15 @@ const FeaturedClasses = () => {
                                 className="w-full h-48 object-cover rounded-t-2xl"
                             />
                             <div className="p-4">
-                                <h3 className="text-lg font-semibold mb-2 text-base-content">{cls.title}</h3>
-                                <p className="text-base-content/70 text-sm mb-2">
+                                <h3 className="text-lg font-semibold mb-2 text-base-content h-15">{cls.title}</h3>
+                                <p className="text-base-content/70 text-sm mb-2 h-15">
                                     {cls.description?.slice(0, 80)}...
                                 </p>
                                 <p className="text-sm text-base-content mb-2">👤 Instructor: {cls.teacherName}</p>
                                 <p className="text-sm text-base-content mb-2">🎓 Enrolled: {cls.enrolledCount}</p>
                                 <Link
                                     to={`/class-details/${cls._id}`}
-                                    className="btn btn-sm bg-[#CAEB66] text-base-content hover:scale-105 transition rounded-xl"
+                                    className="btn btn-sm bg-primary text-base-content hover:scale-105 transition rounded-xl"
                                 >
                                     See Details
                                 </Link>
@@ -56,7 +56,7 @@ const FeaturedClasses = () => {
                 <div className="min-w-[300px] flex items-center justify-center px-4">
                     <Link
                         to="/all-classes"
-                        className="flex flex-col items-center justify-center text-primary hover:text-primary-focus transition"
+                        className="flex flex-col items-center justify-center hover:text-primary-focus transition"
                     >
                         <FaArrowRight className="text-5xl mb-2" />
                         <p className="font-semibold text-lg">Find More</p>

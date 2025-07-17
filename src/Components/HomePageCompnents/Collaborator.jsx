@@ -10,9 +10,9 @@ const Collaborator = () => {
   const logos = [img1, img2, img3, img4, img5];
 
   return (
-    <section className="py-12 bg-base-200">
+    <section className="py-12 bg-base-100 rounded-2xl">
       <div className="max-w-6xl mx-auto text-center mb-6">
-        <h2 className="text-3xl font-bold text-primary">Our Collaborators</h2>
+        <h2 className="text-3xl font-bold">Our Collaborators</h2>
         <p className="text-base-content/70 mt-2">
           Proudly working with the following partners and organizations
         </p>

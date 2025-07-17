@@ -27,7 +27,7 @@ const WebsiteStats = () => {
   }, [axiosSecure]);
 
   return (
-    <section className="py-16 px-4 bg-base-200 max-w-6xl mx-auto">
+    <section className="py-16 px-4 bg-base-100 max-w-6xl mx-auto">
       <h2 className="text-3xl font-bold mb-4 text-center">Platform Overview</h2>
       <div className="grid md:grid-cols-2 items-center gap-10">
         {/* Left: Stats Cards */}

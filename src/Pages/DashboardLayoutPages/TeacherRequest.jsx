@@ -54,7 +54,7 @@ const TeacherRequest = () => {
                                 <td>{index + 1}</td>
                                 <td>{request.name}</td>
                                 <td>
-                                    <img src={request.image} alt="user" className="w-12 h-12 rounded-full object-cover" />
+                                    <img src={request.image || "https://img.freepik.com/premium-psd/3d-user-icon-with-transparent-background_643365-335.jpg?w=826"} alt="user" className="w-12 h-12 rounded-full object-cover" />
                                 </td>
                                 <td>{request.experience}</td>
                                 <td>{request.title}</td>
@@ -98,7 +98,7 @@ const TeacherRequest = () => {
                 {requests.map((request) => (
                     <div key={request._id} className="card bg-base-200 shadow-md p-4 rounded-xl">
                         <div className="flex items-center gap-4">
-                            <img src={request.image} alt="user" className="w-14 h-14 rounded-full object-cover" />
+                            <img src={request.image || "https://img.freepik.com/premium-psd/3d-user-icon-with-transparent-background_643365-335.jpg?w=826"} alt="user" className="w-14 h-14 rounded-full object-cover" />
                             <div>
                                 <h3 className="font-bold text-lg">{request.name}</h3>
                                 <p className="text-sm text-gray-500">{request.title}</p>

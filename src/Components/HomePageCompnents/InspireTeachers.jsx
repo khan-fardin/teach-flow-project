@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 const InspireTeachers = () => {
 
     return (
-        <section className="bg-base-200 py-16 px-6">
+        <section className="bg-base-200 py-16 px-6 rounded-2xl">
             <div className="max-w-6xl mx-auto grid md:grid-cols-2 items-center gap-10">
                 {/* Left: Text */}
                 <div>

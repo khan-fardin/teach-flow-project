@@ -15,7 +15,7 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
-    const axiosInstance =useAxios();
+    const axiosInstance = useAxios();
 
     const onSubmit = (data) => {
         const { email, password } = data;
@@ -81,16 +81,18 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center p-5 bg-base-200">
+        <div className="min-h-screen flex flex-col-reverse lg:flex-row items-center justify-center p-5 bg-base-200">
             {/* Image Section */}
             <div className="w-full lg:w-1/2 flex justify-center items-center mb-8 lg:mb-0">
-                <img src="https://img.freepik.com/free-photo/3d-render-secure-login-password-illustration_107791-16640.jpg?t=st=1752055695~exp=1752059295~hmac=59dc390f6b0c10894182cf634fb96e803c3a81973fd3fd9c5753288c64c148b2&w=826" alt="Login Illustration" className="w-full max-w-lg" />
+                <img src="https://img.freepik.com/free-photo/3d-render-secure-login-password-illustration_107791-16640.jpg?t=st=1752055695~exp=1752059295~hmac=59dc390f6b0c10894182cf634fb96e803c3a81973fd3fd9c5753288c64c148b2&w=826" alt="Login Illustration" className="w-full max-w-lg max-lg:hidden rounded-2xl" />
             </div>
 
             {/* Form Section */}
-            <div className="w-full lg:w-1/2 max-w-md bg-white p-8 rounded-2xl shadow-xl">
+            <div className="w-full lg:w-1/2 max-w-md bg-white p-8 rounded-2xl shadow-xl space-y-5">
                 {/* Logo and Intro */}
-                <Logo/>
+                <div className='flex items-center justify-center'>
+                    <Logo />
+                </div>
 
                 {/* Form */}
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

@@ -17,10 +17,10 @@ const Home = () => {
             <Banner/>
             <Collaborator/>
             <FeaturedClasses/>
-            <FeedbackSection/>
-            <WebsiteStats/>
-            <InspireTeachers/>
             <ExtraSection/>
+            <WebsiteStats/>
+            <FeedbackSection/>
+            <InspireTeachers/>
         </div>
     );
 };

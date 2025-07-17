@@ -7,7 +7,7 @@ const ExtraSection = () => {
         <div>
             <section className="bg-base-100 py-16 px-6">
                 <div className="max-w-6xl mx-auto text-center">
-                    <h2 className="text-4xl font-bold mb-10 text-primary">Student Success Stories</h2>
+                    <h2 className="text-4xl font-bold mb-10">Student Success Stories</h2>
 
                     <div className="grid md:grid-cols-3 gap-8">
                         {[
@@ -38,10 +38,10 @@ const ExtraSection = () => {
                     </div>
                 </div>
             </section>
-            <section className="bg-base-200 py-16 px-6 text-primary">
+            <section className="bg-base-200 py-16 px-6 rounded-2xl">
                 <div className="max-w-6xl mx-auto text-center">
                     <h2 className="text-4xl font-bold mb-10">How It Works</h2>
-                    <div className="grid md:grid-cols-3 gap-8">
+                    <div className="grid md:grid-cols-3 gap-8 text-primary">
                         <div className="bg-base-100 p-6 rounded-xl shadow-md">
                             <FaUserGraduate className="text-4xl mb-4 mx-auto" />
                             <h4 className="text-xl font-semibold mb-2">1. Join as a Learner</h4>

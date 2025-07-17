@@ -1,0 +1,69 @@
+{
+    "id": "cl001",
+    "title": "Advanced JavaScript Masterclass",
+    "instructor": {
+        "name": "Sarah Johnson",
+        "id": "teach_789",
+        "avatar": "https://example.com/avatars/sarah-johnson.jpg",
+        "rating": 4.8
+    },
+    "thumbnail": "https://example.com/thumbnails/js-masterclass.jpg",
+    "price": 89.99,
+    "discount": {
+        "active": true,
+        "discountedPrice": 59.99
+    },
+    "category": "Web Development",
+    "shortDescription": "Master modern JavaScript (ES6+) with real-world projects.",
+    "longDescription": "This course covers... (detailed HTML content)",
+    "totalEnrollment": 1245,
+    "duration": "6 weeks",
+    "level": "Intermediate",
+    "prerequisites": [
+        "Basic JavaScript"
+    ],
+    "status": "approved", // or "pending"/"rejected"
+    "createdAt": "2023-05-15T10:30:00Z",
+    "syllabus": [
+        {
+            "week": 1,
+            "topic": "ES6 Fundamentals",
+            "lessons": [
+                "Arrow Functions",
+                "Destructuring"
+            ]
+        }
+    ],
+    "reviews": [
+        {
+            "id": "rev_456",
+            "student": {
+                "name": "Alex Chen",
+                "avatar": "https://example.com/avatars/alex-chen.jpg"
+            },
+            "rating": 5,
+            "comment": "The best JS course I've taken!",
+            "date": "2023-06-20T14:25:00Z"
+        }
+    ],
+    "enrollmentData": [
+        {
+            "enrollmentId": "enr_123",
+            "studentId": "user_456",
+            "paymentStatus": "completed", // or "pending"/"failed"
+            "transactionId": "txn_789xyz",
+            "amountPaid": 59.99,
+            "paymentMethod": "stripe",
+            "purchaseDate": "2023-06-10T08:45:00Z",
+            "completionStatus": "in-progress", // or "completed"
+            "certificateIssued": false
+        }
+    ],
+    "resources": [
+        {
+            "type": "PDF",
+            "title": "Course Handbook",
+            "url": "https://example.com/resources/handbook.pdf"
+        }
+    ]
+}

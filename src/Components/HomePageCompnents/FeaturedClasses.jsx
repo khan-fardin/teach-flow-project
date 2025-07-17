@@ -1,0 +1,70 @@
+import React, { useEffect, useState } from 'react';
+import { FaArrowRight } from 'react-icons/fa6';
+import { Link } from 'react-router';
+import useAxios from '../../hooks/useAxios';
+
+const FeaturedClasses = () => {
+    const [classes, setClasses] = useState([]);
+    const axios = useAxios();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get("/popular-classes")
+            .then(res => setClasses(res.data))
+            .finally(() => setLoading(false));
+    }, [axios]);
+
+    if (loading) {
+        return <p className="text-center py-10">Loading popular classes...</p>;
+    }
+
+    return (
+        <section className="py-12 px-4 bg-base-200 text-primary">
+            <h2 className="text-3xl font-bold text-center mb-6">Popular Classes</h2>
+
+            <div className="overflow-x-auto flex">
+                <div className="flex gap-6 min-w-max px-2">
+                    {classes.map((cls) => (
+                        <div
+                            key={cls._id}
+                            className="min-w-[300px] max-w-[300px] bg-base-100 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300"
+                        >
+                            <img
+                                src={cls.image}
+                                alt={cls.title}
+                                className="w-full h-48 object-cover rounded-t-2xl"
+                            />
+                            <div className="p-4">
+                                <h3 className="text-lg font-semibold mb-2 text-base-content">{cls.title}</h3>
+                                <p className="text-base-content/70 text-sm mb-2">
+                                    {cls.description?.slice(0, 80)}...
+                                </p>
+                                <p className="text-sm text-base-content mb-2">👤 Instructor: {cls.teacherName}</p>
+                                <p className="text-sm text-base-content mb-2">🎓 Enrolled: {cls.enrolledCount}</p>
+                                <Link
+                                    to={`/class-details/${cls._id}`}
+                                    className="btn btn-sm bg-[#CAEB66] text-base-content hover:scale-105 transition rounded-xl"
+                                >
+                                    See Details
+                                </Link>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* 👉 CTA - Find More Button */}
+                <div className="min-w-[300px] flex items-center justify-center px-4">
+                    <Link
+                        to="/all-classes"
+                        className="flex flex-col items-center justify-center text-primary hover:text-primary-focus transition"
+                    >
+                        <FaArrowRight className="text-5xl mb-2" />
+                        <p className="font-semibold text-lg">Find More</p>
+                    </Link>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default FeaturedClasses;

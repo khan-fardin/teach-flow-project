@@ -1,0 +1,50 @@
+[
+  {
+    "_id": "1",
+    "userName": "Alice Johnson",
+    "userPhoto": "https://randomuser.me/api/portraits/women/44.jpg",
+    "classTitle": "React Basics",
+    "comment": "Great course! The teacher explained concepts clearly and assignments were helpful.",
+    "rating": 5
+  },
+  {
+    "_id": "2",
+    "userName": "Bob Smith",
+    "userPhoto": "https://randomuser.me/api/portraits/men/46.jpg",
+    "classTitle": "Advanced Node.js",
+    "comment": "Challenging but rewarding. The course materials were very thorough.",
+    "rating": 4
+  },
+  {
+    "_id": "3",
+    "userName": "Clara Lee",
+    "userPhoto": "https://randomuser.me/api/portraits/women/65.jpg",
+    "classTitle": "CSS Masterclass",
+    "comment": "Loved the practical examples and the responsive design lessons!",
+    "rating": 5
+  },
+  {
+    "_id": "4",
+    "userName": "Alice Johnson",
+    "userPhoto": "https://randomuser.me/api/portraits/women/44.jpg",
+    "classTitle": "React Basics",
+    "comment": "Great course! The teacher explained concepts clearly and assignments were helpful.",
+    "rating": 5
+  },
+  {
+    "_id": "5",
+    "userName": "Bob Smith",
+    "userPhoto": "https://randomuser.me/api/portraits/men/46.jpg",
+    "classTitle": "Advanced Node.js",
+    "comment": "Challenging but rewarding. The course materials were very thorough.",
+    "rating": 4
+  },
+  {
+    "_id": "6",
+    "userName": "Clara Lee",
+    "userPhoto": "https://randomuser.me/api/portraits/women/65.jpg",
+    "classTitle": "CSS Masterclass",
+    "comment": "Loved the practical examples and the responsive design lessons!",
+    "rating": 5
+  }
+]

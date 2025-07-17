@@ -2,7 +2,6 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const AllClassesAdmin = () => {
@@ -11,7 +10,7 @@ const AllClassesAdmin = () => {
   const { data: classes = [], refetch } = useQuery({
     queryKey: ['all-classes'],
     queryFn: async () => {
-      const res = await axiosSecure.get('/classes'); // All classes including pending
+      const res = await axiosSecure.get('/classes');
       return res.data;
     }
   });
@@ -37,10 +36,17 @@ const AllClassesAdmin = () => {
     }
   };
 
+  const handleProgress = (id) => {
+    // You can implement modal or navigate manually if needed
+    console.log("Progress for class:", id);
+  };
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold text-center mb-6">All Classes (Admin Panel)</h2>
-      <div className="overflow-x-auto">
+
+      {/* Large screen table */}
+      <div className="hidden lg:block overflow-x-auto">
         <table className="table table-zebra w-full">
           <thead>
             <tr>
@@ -56,12 +62,24 @@ const AllClassesAdmin = () => {
           <tbody>
             {classes.map(cls => (
               <tr key={cls._id}>
-                <td><img src={cls.image} alt="class" className="w-16 h-16 object-cover rounded" /></td>
+                <td>
+                  <img
+                    src={cls.image}
+                    alt="class"
+                    className="w-16 h-16 object-cover rounded border"
+                    onError={(e) => (e.target.src = "https://via.placeholder.com/64")}
+                  />
+                </td>
                 <td>{cls.title}</td>
                 <td>{cls.teacherEmail}</td>
-                <td>{cls.description?.slice(0, 40)}...</td>
+                <td>{cls.description?.length > 40 ? `${cls.description.slice(0, 40)}...` : cls.description}</td>
                 <td>
-                  <span className={`badge ${cls.status === 'approved' ? 'badge-success' : cls.status === 'rejected' ? 'badge-error' : 'badge-warning'}`}>
+                  <span className={`badge capitalize ${cls.status === 'approved'
+                    ? 'badge-success'
+                    : cls.status === 'rejected'
+                      ? 'badge-error'
+                      : 'badge-warning'
+                    }`}>
                     {cls.status}
                   </span>
                 </td>
@@ -69,32 +87,85 @@ const AllClassesAdmin = () => {
                   <button
                     className="btn btn-sm btn-success"
                     onClick={() => handleStatusUpdate(cls._id, 'approved')}
-                    disabled={cls.status === 'approved' || cls.status === 'rejected'}
+                    disabled={cls.status !== 'pending'}
                   >
                     Approve
                   </button>
                   <button
                     className="btn btn-sm btn-error"
                     onClick={() => handleStatusUpdate(cls._id, 'rejected')}
-                    disabled={cls.status === 'rejected' || cls.status === 'approved'}
+                    disabled={cls.status !== 'pending'}
                   >
                     Reject
                   </button>
                 </td>
                 <td>
-                  <Link to={`/dashboard/class-progress/${cls._id}`}>
-                    <button
-                      className="btn btn-sm btn-outline"
-                      disabled={cls.status !== 'approved'}
-                    >
-                      Progress
-                    </button>
-                  </Link>
+                  <button
+                    className="btn btn-sm btn-outline"
+                    disabled={cls.status !== 'approved'}
+                    onClick={() => handleProgress(cls._id)}
+                  >
+                    Progress
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile/Tablet Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:hidden">
+        {classes.map(cls => (
+          <div key={cls._id} className="card bg-base-100 shadow-md">
+            <figure className="p-4">
+              <img
+                src={cls.image}
+                alt={cls.title}
+                className="w-full h-40 object-cover rounded-md"
+                onError={(e) => (e.target.src = "https://via.placeholder.com/150")}
+              />
+            </figure>
+            <div className="card-body p-4">
+              <h2 className="text-lg font-semibold">{cls.title}</h2>
+              <p className="text-sm text-gray-500">{cls.teacherEmail}</p>
+              <p className="text-sm">{cls.description?.slice(0, 60)}...</p>
+              <div className="mt-2">
+                <span className={`badge capitalize ${cls.status === 'approved'
+                  ? 'badge-success'
+                  : cls.status === 'rejected'
+                    ? 'badge-error'
+                    : 'badge-warning'
+                  }`}>
+                  {cls.status}
+                </span>
+              </div>
+              <div className="flex gap-2 mt-3 flex-wrap">
+                <button
+                  className="btn btn-sm btn-success"
+                  onClick={() => handleStatusUpdate(cls._id, 'approved')}
+                  disabled={cls.status !== 'pending'}
+                >
+                  Approve
+                </button>
+                <button
+                  className="btn btn-sm btn-error"
+                  onClick={() => handleStatusUpdate(cls._id, 'rejected')}
+                  disabled={cls.status !== 'pending'}
+                >
+                  Reject
+                </button>
+                <button
+                  className="btn btn-sm btn-outline"
+                  disabled={cls.status !== 'approved'}
+                  onClick={() => handleProgress(cls._id)}
+                >
+                  Progress
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

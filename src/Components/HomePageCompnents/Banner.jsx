@@ -71,11 +71,10 @@ const Banner = () => {
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-4 h-4 rounded-full transition-all duration-300 border-2 ${
-              currentSlide === index
-                ? 'bg-white border-white scale-125'
-                : 'bg-gray-400 border-transparent'
-            }`}
+            className={`w-4 h-4 rounded-full transition-all duration-300 border-2 ${currentSlide === index
+              ? 'bg-white border-white scale-125'
+              : 'bg-gray-400 border-transparent'
+              }`}
             aria-label={`Go to slide ${index + 1}`}
           ></button>
         ))}

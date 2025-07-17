@@ -10,7 +10,7 @@ import ExtraSection from '../../Components/HomePageCompnents/ExtraSection';
 
 const Home = () => {
     return (
-        <div>
+        <div className='space-y-5'>
             <Helmet>
                 <title>Home</title>
             </Helmet>

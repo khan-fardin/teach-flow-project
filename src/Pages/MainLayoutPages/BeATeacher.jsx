@@ -103,7 +103,7 @@ const BeATeacher = () => {
     }
 
     return (
-        <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg mt-10">
+        <div className="my-5 mx-auto p-6 bg-base-200 rounded-xl shadow-lg">
             <h2 className="text-3xl font-bold mb-6 text-center">Teach on EduVerse</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 

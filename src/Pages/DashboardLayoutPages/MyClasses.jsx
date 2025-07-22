@@ -1,10 +1,12 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
+import Loading from '../Loading';
 
 const MyClasses = () => {
     const axiosSecure = useAxiosSecure();
@@ -19,6 +21,22 @@ const MyClasses = () => {
         }
     });
 
+    const { mutate: deleteClass, isPending } = useMutation({
+        mutationFn: async (id) => {
+            const res = await axiosSecure.delete(`/classes/${id}`);
+            return res.data;
+        },
+        onSuccess: (data) => {
+            if (data.deletedCount > 0) {
+                toast.success("Class deleted successfully");
+                refetch(); // refresh the class list
+            }
+        },
+        onError: () => {
+            toast.error("Failed to delete class");
+        }
+    });
+
     const handleDelete = async (id) => {
         const result = await Swal.fire({
             title: 'Are you sure?',
@@ -29,25 +47,48 @@ const MyClasses = () => {
         });
 
         if (result.isConfirmed) {
+            deleteClass(id);
+        }
+    };
+
+    const handleUpdate = async (id, currentTitle, currentPrice) => {
+        const { value: formValues } = await Swal.fire({
+            title: 'Update Class',
+            html:
+                `<input id="swal-input1" class="swal2-input" placeholder="Title" value="${currentTitle}" />
+             <input id="swal-input2" type="number" class="swal2-input" placeholder="Price" value="${currentPrice}" />`,
+            focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: 'Update',
+            preConfirm: () => {
+                return {
+                    title: document.getElementById('swal-input1').value,
+                    price: parseFloat(document.getElementById('swal-input2').value),
+                };
+            }
+        });
+        if (formValues) {
             try {
-                const res = await axiosSecure.delete(`/classes/${id}`);
-                if (res.data.deletedCount > 0) {
-                    toast.success("Class deleted successfully");
+                const res = await axiosSecure.patch(`/update-class/${id}`, formValues);
+                if (res.data.modifiedCount > 0) {
+                    toast.success('Class updated successfully');
                     refetch();
+                } else {
+                    toast.info('No changes were made');
                 }
-            } catch (error) {
-                toast.error("Failed to delete class");
+            } catch (err) {
+                toast.error('Failed to update class');
             }
         }
     };
 
-    const handleUpdate = (id) => {
-        // Redirect to update route or open modal here
-        // You can use navigate(`/dashboard/update-class/${id}`) or openModal(id)
-    };
+    if (isLoading) return <Loading />;
 
     return (
         <div className="p-5">
+            <Helmet>
+                <title>My Classes</title>
+            </Helmet>
             <h2 className="text-2xl font-bold mb-6 text-center">My Classes</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {myClasses.map(cls => (
@@ -65,7 +106,7 @@ const MyClasses = () => {
                             </p>
                             <div className="flex flex-wrap gap-2 mt-3">
                                 <button
-                                    onClick={() => handleUpdate(cls._id)}
+                                    onClick={() => handleUpdate(cls._id, cls.title, cls.price)}
                                     className="btn btn-sm btn-info"
                                 >
                                     Update
@@ -73,17 +114,21 @@ const MyClasses = () => {
                                 <button
                                     onClick={() => handleDelete(cls._id)}
                                     className="btn btn-sm btn-error"
+                                    disabled={isPending}
                                 >
-                                    Delete
+                                    {isPending ? "Deleting..." : "Delete"}
                                 </button>
-                                <Link to={`/dashboard/my-class/${cls._id}`}>
-                                    <button
-                                        className="btn btn-sm btn-secondary"
-                                        disabled={cls.status !== 'approved'}
-                                    >
+                                {cls.status === 'approved' ? (
+                                    <Link to={`/dashboard/my-class/${cls._id}`}>
+                                        <button className="btn btn-sm btn-secondary">
+                                            See Details
+                                        </button>
+                                    </Link>
+                                ) : (
+                                    <button className="btn btn-sm btn-secondary" disabled>
                                         See Details
                                     </button>
-                                </Link>
+                                )}
                             </div>
                         </div>
                     </div>

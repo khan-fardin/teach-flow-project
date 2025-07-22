@@ -1,10 +1,12 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
+import { Helmet } from 'react-helmet-async';
 import Logo from '../Components/Shared/Logo';
 import useAdminCheck from '../hooks/useAdminCheck';
 import { FaBookOpen, FaShield, FaUser, FaUserSecret } from 'react-icons/fa6';
 import { FaHome, FaPlusCircle } from 'react-icons/fa';
 import { LuLayoutList } from "react-icons/lu";
+import Loading from '../Pages/Loading';
 
 const DashboardLayout = () => {
     const { isAdmin, adminLoading } = useAdminCheck();
@@ -56,11 +58,26 @@ const DashboardLayout = () => {
                     </li>
                 </>
             )}
+
+            {!adminLoading && isAdmin === "student" && (
+                <>
+                    <li>
+                        <NavLink to="/dashboard/my-enrolled-classes" className="flex items-center gap-2 px-4 py-2 hover:bg-primary rounded-lg">
+                            <LuLayoutList className="w-5 h-5" /> My Enrolled Classes
+                        </NavLink>
+                    </li>
+                </>
+            )}
         </>
     );
 
+    if (adminLoading) return <Loading />;
+
     return (
         <div className="min-h-screen flex">
+            <Helmet>
+                <title>Dashboard</title>
+            </Helmet>
             <div className="drawer lg:drawer-open">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content flex flex-col">

@@ -1,33 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import React from 'react';
+import { useParams, Link } from 'react-router';
+import { Helmet } from 'react-helmet-async';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { FaCreditCard } from 'react-icons/fa';
+import { useQuery } from '@tanstack/react-query';
 
 const ClassDetails = () => {
     const { id } = useParams();
     const axiosSecure = useAxiosSecure();
-    const navigate = useNavigate();
-    const [cls, setCls] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
-    useEffect(() => {
-        axiosSecure.get(`/classes/${id}`)
-            .then(res => setCls(res.data))
-            .catch(err => {
-                console.error(err);
-                setError("Failed to load class details.");
-            })
-            .finally(() => setLoading(false));
-    }, [axiosSecure, id]);
+    const { data: cls, isLoading, isError, error } = useQuery({
+        queryKey: ['class-details', id],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/classes/${id}`);
+            return res.data;
+        },
+        enabled: !!id,
+    });
 
-    const handlePay = () => {
-        navigate(`/payment/${id}`);
-    };
-
-    if (loading) {
+    if (isLoading) {
         return (
-            <div className="max-w-2xl mx-auto p-6">
+            <div className="mx-auto p-6">
                 <div className="skeleton h-64 w-full mb-4 rounded"></div>
                 <div className="skeleton h-6 w-3/4 mb-2"></div>
                 <div className="skeleton h-4 w-1/2 mb-2"></div>
@@ -38,14 +31,21 @@ const ClassDetails = () => {
         );
     }
 
-    if (error) {
-        return <div className="text-center text-red-600 font-semibold">{error}</div>;
+    if (isError) {
+        return (
+            <div className="text-center text-red-600 font-semibold">
+                Failed to load class details: {error.message}
+            </div>
+        );
     }
 
     if (!cls) return null;
 
     return (
         <div className="my-5 mx-auto p-6 bg-base-200 rounded-lg shadow-md">
+            <Helmet>
+                <title>Class Details</title>
+            </Helmet>
             <img
                 src={cls.image}
                 alt={cls.title}
@@ -59,12 +59,11 @@ const ClassDetails = () => {
             </p>
             <p className="text-gray-600 mb-6">{cls.description}</p>
 
-            <button
-                onClick={handlePay}
+            <Link to={`/payment/${cls.classId}`}
                 className="btn btn-success w-full text-lg"
             >
                 <FaCreditCard className="mr-2" /> Pay Now
-            </button>
+            </Link>
         </div>
     );
 };

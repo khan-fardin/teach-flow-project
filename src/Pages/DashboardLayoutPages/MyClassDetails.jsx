@@ -1,27 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 const MyClassDetails = () => {
     const { id } = useParams();
     const axiosSecure = useAxiosSecure();
 
-    const [classData, setClassData] = useState({});
-    const [submissionCount, setSubmissionCount] = useState(0);
+    const { data: classData = {}, isLoading, refetch } = useQuery({
+        queryKey: ['classData', id],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/classes/${id}`);
+            return res.data;
+        }
+    });
 
-    useEffect(() => {
-        // Get full class data with embedded assignments
-        axiosSecure.get(`/classes/${id}`)
-            .then(res => setClassData(res.data))
-            .catch(() => toast.error('Failed to load class data'));
+    const { data: enrollmentData, isLoading: loadingEnrollments } = useQuery({
+        queryKey: ['enrollmentCount', id],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/enrollments/count/${classData.classId}`);
+            return res.data.totalEnrollment;
+        },
+        enabled: !!classData.classId // only run if classData is loaded
+    });
 
-        // Get submission count
-        axiosSecure.get(`/submissions/count/${id}`)
-            .then(res => setSubmissionCount(res.data.count))
-            .catch(() => toast.error('Failed to load submission count'));
-    }, [axiosSecure, id]);
+    const createAssignmentMutation = useMutation({
+        mutationFn: async (formValues) => {
+            const res = await axiosSecure.patch(`/classes/add-assignment/${id}`, formValues);
+            return res.data;
+        },
+        onSuccess: (data) => {
+            if (data.modifiedCount > 0) {
+                toast.success('Assignment added!');
+                refetch();
+            } else {
+                toast.error('Assignment not added.');
+            }
+        },
+        onError: () => toast.error('Failed to create assignment')
+    });
 
     const handleCreateAssignment = async () => {
         const { value: formValues } = await Swal.fire({
@@ -37,30 +57,26 @@ const MyClassDetails = () => {
                 const description = document.getElementById('description').value;
                 if (!title || !deadline || !description) {
                     Swal.showValidationMessage('All fields are required');
+                    return false;
                 }
                 return { title, deadline, description };
             }
         });
 
         if (formValues) {
-            try {
-                const res = await axiosSecure.patch(`/classes/add-assignment/${id}`, formValues);
-                if (res.data.modifiedCount > 0) {
-                    toast.success('Assignment added!');
-                    // Update UI manually
-                    setClassData(prev => ({
-                        ...prev,
-                        assignments: [...(prev.assignments || []), { ...formValues, createdAt: new Date() }],
-                    }));
-                }
-            } catch {
-                toast.error('Failed to create assignment');
-            }
+            createAssignmentMutation.mutate(formValues);
         }
     };
 
+    if (isLoading) {
+        return <div className="text-center py-10">Loading...</div>;
+    }
+
     return (
         <div className="p-6 space-y-10">
+            <Helmet>
+                <title>Class Details</title>
+            </Helmet>
             <h2 className="text-2xl font-bold text-center mb-6">Class Progress Details</h2>
             <h1 className='text-xl font-black text-center'>{classData.title}</h1>
             <h1 className='text-sm text-center text-gray-500'>{classData.classId}</h1>
@@ -69,7 +85,7 @@ const MyClassDetails = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="card bg-base-200 p-5">
                     <h3 className="text-xl font-semibold mb-2">Total Enrollments</h3>
-                    <p className="text-3xl font-bold">{classData.totalEnrollment || 0}</p>
+                    <p className="text-3xl font-bold">{enrollmentData || 0}</p>
                 </div>
                 <div className="card bg-base-200 p-5">
                     <h3 className="text-xl font-semibold mb-2">Total Assignments</h3>
@@ -77,7 +93,7 @@ const MyClassDetails = () => {
                 </div>
                 <div className="card bg-base-200 p-5">
                     <h3 className="text-xl font-semibold mb-2">Total Submissions</h3>
-                    <p className="text-3xl font-bold">{submissionCount}</p>
+                    <p className="text-3xl font-bold">{classData.totalSubmissions || 0}</p>
                 </div>
             </div>
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { FaGoogle, FaLock, FaEnvelope, FaUser } from 'react-icons/fa';
 import { Bounce, toast } from 'react-toastify';
@@ -41,7 +42,7 @@ const Register = () => {
                         });
                     // user info in database
                     const userInfo = {
-                        name, email, role: 'user', userCreatedAt: new Date().toISOString(), lastLogIn: new Date().toISOString()
+                        name, email, role: 'student', userCreatedAt: new Date().toISOString(), lastLogIn: new Date().toISOString()
                     };
                     const userRes = await axiosInstance.post('/users', userInfo);
                     console.log(userRes.data);
@@ -68,7 +69,7 @@ const Register = () => {
                     name: user.displayName,
                     email: user.email,
                     photo: user.photoURL,
-                    role: 'user', // Default role
+                    role: 'student', // Default role
                     userCreatedAt: new Date().toISOString(),
                     lastLogIn: new Date().toISOString(),
                 };
@@ -92,6 +93,9 @@ const Register = () => {
 
     return (
         <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center p-5 bg-base-200">
+            <Helmet>
+                <title>Register | TeachFlow</title>
+            </Helmet>
             {/* Image Section */}
             <div className="w-full lg:w-1/2 flex justify-center items-center mb-8 lg:mb-0">
                 <img src="https://img.freepik.com/premium-vector/register-now-speech-bubble-collection-iconlabel-sticker-logo-badge-banner-design-template_359398-2303.jpg?w=826" alt="Register Illustration" className="w-full max-w-lg rounded-2xl max-lg:hidden" />
@@ -101,7 +105,7 @@ const Register = () => {
             <div className="w-full lg:w-1/2 max-w-md bg-white p-8 rounded-2xl shadow-xl">
                 {/* Logo and Intro */}
                 <div className="flex flex-col items-center space-y-2.5 text-center mb-6">
-                    <Logo/>
+                    <Logo />
                     <p className="text-sm text-gray-600">Join Our Teaching Community</p>
                 </div>
 

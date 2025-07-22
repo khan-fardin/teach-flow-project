@@ -1,5 +1,6 @@
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
+import { Helmet } from 'react-helmet-async';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { FaUser, FaEnvelope, FaUserShield } from 'react-icons/fa';
@@ -26,7 +27,10 @@ const Profile = () => {
     }
 
     return (
-        <div className="max-w-xl mx-auto mt-10 p-6 bg-base-200 rounded-lg shadow-md">
+        <div className="mx-auto mt-10 p-6 bg-base-200 rounded-lg shadow-md">
+            <Helmet>
+                <title>User Profile</title>
+            </Helmet>
             <h2 className="text-2xl font-bold mb-4 text-center">User Profile</h2>
             <div className="space-y-4">
                 <div className="flex items-center gap-3 text-lg">

@@ -1,8 +1,10 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet-async';
 import { FaCheck, FaTimes } from 'react-icons/fa';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Loading from '../Loading';
 
 const TeacherRequest = () => {
     const axiosSecure = useAxiosSecure();
@@ -27,10 +29,13 @@ const TeacherRequest = () => {
         }
     };
 
-    if (isLoading) return <div className="text-center mt-10">Loading...</div>;
+    if (isLoading) return <Loading />;
 
     return (
         <div className="mt-10 p-5">
+            <Helmet>
+                <title>Teacher Requests</title>
+            </Helmet>
             <h2 className="text-2xl font-bold text-center mb-6">Teacher Requests</h2>
 
             {/* Table for large screens */}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { Helmet } from 'react-helmet-async';
 import { FaGoogle, FaLock, FaEnvelope } from 'react-icons/fa';
 import { Bounce, toast } from 'react-toastify';
 import Swal from 'sweetalert2';
@@ -61,7 +62,7 @@ const Login = () => {
                     name: user.displayName,
                     email: user.email,
                     photo: user.photoURL,
-                    role: 'user', // Default role
+                    role: 'student', // Default role
                     userCreatedAt: new Date().toISOString(),
                     lastLogIn: new Date().toISOString(),
                 };
@@ -82,6 +83,9 @@ const Login = () => {
 
     return (
         <div className="min-h-screen flex flex-col-reverse lg:flex-row items-center justify-center p-5 bg-base-200">
+            <Helmet>
+                <title>Login | TeachFlow</title>
+            </Helmet>
             {/* Image Section */}
             <div className="w-full lg:w-1/2 flex justify-center items-center mb-8 lg:mb-0">
                 <img src="https://img.freepik.com/free-photo/3d-render-secure-login-password-illustration_107791-16640.jpg?t=st=1752055695~exp=1752059295~hmac=59dc390f6b0c10894182cf634fb96e803c3a81973fd3fd9c5753288c64c148b2&w=826" alt="Login Illustration" className="w-full max-w-lg max-lg:hidden rounded-2xl" />

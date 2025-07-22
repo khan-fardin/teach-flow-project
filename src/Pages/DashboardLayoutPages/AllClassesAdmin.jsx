@@ -2,12 +2,15 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Loading from '../Loading';
 
 const AllClassesAdmin = () => {
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
-  const { data: classes = [], refetch } = useQuery({
+  const { data: classes = [], isLoading, refetch } = useQuery({
     queryKey: ['all-classes'],
     queryFn: async () => {
       const res = await axiosSecure.get('/classes');
@@ -37,9 +40,10 @@ const AllClassesAdmin = () => {
   };
 
   const handleProgress = (id) => {
-    // You can implement modal or navigate manually if needed
-    console.log("Progress for class:", id);
+    navigate(`/dashboard/class-progress-admin/${id}`)
   };
+
+  if (isLoading) return <Loading />
 
   return (
     <div className="p-6">

@@ -1,32 +1,70 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router';
+import { Helmet } from 'react-helmet-async';
+import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Loading from '../Loading';
+
+const ITEMS_PER_PAGE = 6;
 
 const AllClasses = () => {
     const axiosSecure = useAxiosSecure();
-    const [classes, setClasses] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
 
-    useEffect(() => {
-        axiosSecure.get('/approved-classes')
-            .then(res => setClasses(res.data))
-            .catch(() => {});
-    }, [axiosSecure]);
+    const { data: allClasses = [], isLoading } = useQuery({
+        queryKey: ['approved-classes'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/approved-classes');
+            return res.data;
+        }
+    });
+
+    if (isLoading) return <Loading />;
+
+    const totalPages = Math.ceil(allClasses.length / ITEMS_PER_PAGE);
+    const paginatedClasses = allClasses.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    );
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-            {classes.map(cls => (
-                <div key={cls._id} className="card bg-base-200 shadow-md p-4">
-                    <img src={cls.image} className="h-48 w-full object-cover rounded" alt="" />
-                    <h2 className="text-xl font-bold mt-3 h-[60px]">{cls.title}</h2>
-                    <p><span className="font-semibold">Instructor:</span> {cls.teacherName}</p>
-                    <p><span className="font-semibold">Price:</span> ${cls.price}</p>
-                    <p className="text-sm my-2 h-[50px]">{cls.description?.slice(0, 60)}...</p>
-                    <p><span className="font-semibold">Total Enrollments:</span> {cls.totalEnrollment || 0}</p>
-                    <Link to={`/class-details/${cls._id}`}>
-                        <button className="btn btn-primary mt-2 w-full">Enroll</button>
-                    </Link>
-                </div>
-            ))}
+        <div className="p-6">
+            <Helmet>
+                <title>All Classes | TeachFlow</title>
+            </Helmet>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {paginatedClasses.map(cls => (
+                    <div key={cls._id} className="card bg-white shadow-lg rounded-xl overflow-hidden transition hover:shadow-xl">
+                        <img src={cls.image} className="h-48 w-full object-cover" alt={cls.title} />
+                        <div className="p-4">
+                            <h2 className="text-xl font-bold text-gray-800 h-15">{cls.title}</h2>
+                            <p className="text-sm text-gray-600 mb-2 h-15">{cls.description?.slice(0, 60)}...</p>
+                            <p className="text-gray-700 font-medium"><span className="font-semibold">Instructor:</span> {cls.teacherName}</p>
+                            <p className="text-gray-700"><span className="font-semibold">Price:</span> ${cls.price}</p>
+                            <p className="text-gray-700 mb-3"><span className="font-semibold">Total Enrollments:</span> {cls.totalEnrollment || 0}</p>
+                            <Link to={`/class-details/${cls._id}`}>
+                                <button className="btn btn-primary w-full">Enroll</button>
+                            </Link>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Pagination Controls */}
+            <div className="flex justify-center mt-8 gap-2">
+                {[...Array(totalPages).keys()].map(pageNum => {
+                    const page = pageNum + 1;
+                    return (
+                        <button
+                            key={page}
+                            className={`btn btn-sm ${page === currentPage ? 'btn-primary' : 'btn-outline'}`}
+                            onClick={() => setCurrentPage(page)}
+                        >
+                            {page}
+                        </button>
+                    );
+                })}
+            </div>
         </div>
     );
 };

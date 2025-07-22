@@ -1,32 +1,20 @@
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { useState } from 'react';
 import useAxios from '../../hooks/useAxios';
-import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 const DashboardHome = () => {
-    const [stats, setStats] = useState(null);
-    const [loading, setLoading] = useState(true);
     const axiosSecure = useAxios();
 
-    useEffect(() => {
-        // For now use demo data, switch to axios later
-        // const demoStats = {
-        //   totalUsers: 120,
-        //   totalClasses: 25,
-        //   totalEnrollments: 230
-        // };
-        // setTimeout(() => {
-        //   setStats(demoStats);
-        //   setLoading(false);
-        // }, 1000);
+    const { data: stats = {}, loading } = useQuery({
+        queryKey: ['website-stats'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/website-stats');
+            return res.data;
+        }
+    });
 
-        // Later replace this:
-        axiosSecure.get('/website-stats')
-            .then(res => setStats(res.data))
-            .finally(() => setLoading(false));
-    }, [axiosSecure]);
     return (
         <div>
             <div className="space-y-6 p-5">

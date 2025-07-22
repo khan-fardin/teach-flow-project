@@ -1,30 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import useAxios from '../../hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
 
 const WebsiteStats = () => {
-  const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(true);
   const axiosSecure = useAxios();
 
-  useEffect(() => {
-    // For now use demo data, switch to axios later
-    // const demoStats = {
-    //   totalUsers: 120,
-    //   totalClasses: 25,
-    //   totalEnrollments: 230
-    // };
-    // setTimeout(() => {
-    //   setStats(demoStats);
-    //   setLoading(false);
-    // }, 1000);
-
-    // Later replace this:
-    axiosSecure.get('/website-stats')
-      .then(res => setStats(res.data))
-      .finally(() => setLoading(false));
-  }, [axiosSecure]);
+  const { data: stats = {}, loading } = useQuery({
+    queryKey: ['website-stats'],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/website-stats');
+      return res.data;
+    }
+  });
 
   return (
     <section className="py-16 px-4 bg-base-100 max-w-6xl mx-auto">

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-toastify';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
@@ -104,6 +105,9 @@ const BeATeacher = () => {
 
     return (
         <div className="my-5 mx-auto p-6 bg-base-200 rounded-xl shadow-lg">
+            <Helmet>
+                <title>Become A Teacher</title>
+            </Helmet>
             <h2 className="text-3xl font-bold mb-6 text-center">Teach on EduVerse</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 

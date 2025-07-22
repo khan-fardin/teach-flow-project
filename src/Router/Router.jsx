@@ -18,11 +18,20 @@ import MyClassDetails from "../Pages/DashboardLayoutPages/MyClassDetails";
 import Profile from "../Pages/DashboardLayoutPages/Profile";
 import ClassDetails from "../Pages/MainLayoutPages/ClassDetails";
 import Payment from "../Pages/MainLayoutPages/Payment";
+import Test from "../Pages/Test";
+import MyEnrolledClasses from "../Pages/DashboardLayoutPages/MyEnrolledClasses";
+import MyEnrolledClassDetail from "../Pages/DashboardLayoutPages/MyEnrolledClassDetail";
+import TeacherRoute from "../Routes/TeacherRoute";
+import Loading from "../Pages/Loading";
+import ErrorPage from "../Pages/ErrorPage";
+import ClassProgressAdmin from "../Pages/DashboardLayoutPages/ClassProgressAdmin";
 
 export const router = createBrowserRouter([
     {
         path: '/',
         Component: MainLayout,
+        hydrateFallbackElement: <Loading />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: '/',
@@ -39,7 +48,7 @@ export const router = createBrowserRouter([
                 </PrivateRoute>,
             },
             {
-                path: 'payment/:parcelId',
+                path: 'payment/:classId',
                 Component: Payment,
             },
             {
@@ -52,6 +61,7 @@ export const router = createBrowserRouter([
     },
     {
         path: 'dashboard',
+        hydrateFallbackElement: <Loading />,
         element: <PrivateRoute>
             <DashboardLayout />
         </PrivateRoute>,
@@ -79,12 +89,22 @@ export const router = createBrowserRouter([
                 </AdminRoute>,
             },
             {
+                path: 'class-progress-admin/:id',
+                element: <AdminRoute>
+                    <ClassProgressAdmin />
+                </AdminRoute>,
+            },
+            {
                 path: 'add-class',
-                Component: AddClass,
+                element: <TeacherRoute>
+                    <AddClass />
+                </TeacherRoute>,
             },
             {
                 path: 'my-classes',
-                Component: MyClasses,
+                element: <TeacherRoute>
+                    <MyClasses />
+                </TeacherRoute>,
             },
             {
                 path: 'my-class/:id',
@@ -93,6 +113,14 @@ export const router = createBrowserRouter([
             {
                 path: 'profile',
                 Component: Profile,
+            },
+            {
+                path: 'my-enrolled-classes',
+                element: <MyEnrolledClasses />,
+            },
+            {
+                path: 'my-enrolled-class/:id',
+                element: <MyEnrolledClassDetail />,
             },
         ],
     },
@@ -103,5 +131,9 @@ export const router = createBrowserRouter([
     {
         path: '/register',
         Component: Register,
+    },
+    {
+        path: '/test',
+        Component: Test,
     },
 ]);

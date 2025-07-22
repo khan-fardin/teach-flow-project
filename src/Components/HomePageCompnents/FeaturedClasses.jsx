@@ -1,21 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FaArrowRight } from 'react-icons/fa6';
 import { Link } from 'react-router';
 import useAxios from '../../hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
 
 const FeaturedClasses = () => {
-    const [classes, setClasses] = useState([]);
     const axios = useAxios();
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        axios.get("/popular-classes")
-            .then(res => setClasses(res.data))
-            .finally(() => setLoading(false));
-    }, [axios]);
+    const { data: classes = [], isLoading, isError } = useQuery({
+        queryKey: ['popular-classes'],
+        queryFn: async () => {
+            const res = await axios.get('/popular-classes');
+            return res.data;
+        }
+    });
 
-    if (loading) {
+    if (isLoading) {
         return <p className="text-center py-10">Loading popular classes...</p>;
+    }
+
+    if (isError) {
+        return <p className="text-center py-10 text-red-500">Failed to load popular classes.</p>;
     }
 
     return (

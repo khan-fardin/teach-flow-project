@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet-async';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { FaSearch, FaUserShield, FaUser, FaEnvelope } from 'react-icons/fa';
@@ -41,7 +42,10 @@ const AdminRoleManager = () => {
 
     return (
         <div className="p-6 max-w-2xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6 text-center">🔐 Admin Role Manager</h2>
+            <Helmet>
+                <title>Admin Manager</title>
+            </Helmet>
+            <h2 className="text-3xl font-bold mb-6 text-center">Admin Role Manager</h2>
 
             <form onSubmit={handleSearch} className="flex items-center gap-3 mb-6">
                 <input

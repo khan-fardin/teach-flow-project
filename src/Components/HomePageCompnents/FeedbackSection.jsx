@@ -1,39 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import useAxiosSecure from '../../hooks/useAxiosSecure'; // your axiosSecure hook
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { FaStar } from 'react-icons/fa';
+import useAxios from '../../hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
 
 const FeedbackSection = () => {
-  const [feedbacks, setFeedbacks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxios();
 
-  useEffect(() => {
-    // Demo mode: load local JSON instead of backend
-    fetch('/demo-feedback.json')
-      .then(res => res.json())
-      .then(data => setFeedbacks(data))
-      .catch(console.error)
-      .finally(() => setLoading(false));
+  const { data: feedbacks = [], isLoading, isError, error } = useQuery({
+    queryKey: ['feedbacks'],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/feedback');
+      return res.data;
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes cache
+    retry: 2, // Retry failed requests twice
+  });
 
-    // Uncomment below for production backend call
-    /*
-    axiosSecure.get('/feedbacks')
-      .then(res => setFeedbacks(res.data))
-      .catch(console.error)
-      .finally(() => setLoading(false));
-    */
-  }, [axiosSecure]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <section className="py-12 px-4">
-        <Skeleton height={200} count={3} style={{ marginBottom: '1rem' }} />
+        <Skeleton height={100} count={3} style={{ marginBottom: '1rem' }} />
       </section>
     );
+  };
+
+  if (isError) {
+    return <div>Error loading feedback: {error.message}</div>;
   }
 
   return (
@@ -48,17 +44,17 @@ const FeedbackSection = () => {
           1024: { slidesPerView: 3 },
         }}
       >
-        {feedbacks.map(({ _id, userName, userPhoto, classTitle, comment, rating }) => (
+        {feedbacks.map(({ _id, student, image, className, comment, rating }) => (
           <SwiperSlide key={_id} className="bg-white p-6 rounded-lg shadow-md my-2">
             <div className="flex items-center gap-4 mb-4">
               <img
-                src={userPhoto}
-                alt={`${userName} avatar`}
+                src={image || "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?t=st=1753123007~exp=1753126607~hmac=3ac9fba701468e51f6fcc2db04f7c865d4f97fd0a7d39013b78c212dffa811dc&w=826"}
+                alt={`${student} avatar`}
                 className="w-14 h-14 rounded-full object-cover"
               />
               <div>
-                <h3 className="font-semibold">{userName}</h3>
-                <p className="text-sm text-gray-500">{classTitle}</p>
+                <h3 className="font-semibold">{student}</h3>
+                <p className="text-sm text-gray-500">{className}</p>
               </div>
             </div>
             <p className="mb-4 text-gray-700 italic h-20">"{comment}"</p>

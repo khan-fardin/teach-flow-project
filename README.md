@@ -1,4 +1,5 @@
-🎓 TeachFlow — MERN stack based web platform where users can:
+## 🎓 TeachFlow 
+# MERN stack based web platform where users can:
 - Enroll in classes
 - Become a teacher
 - Submit assignments
@@ -16,7 +17,7 @@ This repository contains the **frontend** built with **React**, **Tailwind CSS**
 ---
 ## 📂 Repositories
 
-- **Frontend GitHub Repo:** []()
+- **Frontend GitHub Repo:** [https://github.com/khan-fardin/teach-flow-project](https://github.com/khan-fardin/teach-flow-project)
 
 ---
 

@@ -45,7 +45,7 @@ const PaymentForm = () => {
         onSuccess: (data) => {
             if (data.enrollmentId) {
                 toast.success(`✅ Payment Successful! Enrolled. Txn ID: ${data.transactionId}`);
-                navigate(`/dashboard/myenroll-class/${data.enrollmentId}`);
+                navigate(`/dashboard/my-enrolled-class/${classId}`);
             } else {
                 toast.error('⚠ Payment saved but enrollment failed.');
             }

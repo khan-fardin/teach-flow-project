@@ -15,7 +15,7 @@ const Navbar = () => {
     const links = <>
         <li><NavLink to='/' className={({ isActive }) => isActive ? 'font-semibold bg-accent-content border-2' : 'font-semibold rounded-[0]'}>Home</NavLink></li>
         <li><NavLink to='/all-classes' className={({ isActive }) => isActive ? 'font-semibold bg-accent-content border-2' : 'font- rounded-[0]'}>All Classes</NavLink></li>
-        {isAdmin=="!teacher" && user && <li><NavLink to='/be-a-teacher' className={({ isActive }) => isActive ? 'font-semibold bg-accent-content border-2' : 'font- rounded-[0]'}>Teach on TeachFlow</NavLink></li>}
+        {isAdmin!=="teacher" && user && <li><NavLink to='/be-a-teacher' className={({ isActive }) => isActive ? 'font-semibold bg-accent-content border-2' : 'font- rounded-[0]'}>Teach on TeachFlow</NavLink></li>}
         {user && <li><NavLink to='/dashboard' className={({ isActive }) => isActive ? 'font-semibold bg-accent-content border-2' : 'font- rounded-[0]'}>Dashboard</NavLink></li>}
         <li><NavLink to='/about-us' className={({ isActive }) => isActive ? 'font-semibold bg-accent-content border-2' : 'font- rounded-[0]'}>About Us</NavLink></li>
         <li><NavLink to='/contact' className={({ isActive }) => isActive ? 'font-semibold bg-accent-content border-2' : 'font- rounded-[0]'}>Contact</NavLink></li>

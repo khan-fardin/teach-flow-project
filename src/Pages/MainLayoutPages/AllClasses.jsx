@@ -11,6 +11,7 @@ const ITEMS_PER_PAGE = 6;
 const AllClasses = () => {
     const axiosSecure = useAxiosSecure();
     const [currentPage, setCurrentPage] = useState(1);
+    const [sortOption, setSortOption] = useState('default');
 
     const { data: allClasses = [], isLoading } = useQuery({
         queryKey: ['approved-classes'],
@@ -22,8 +23,16 @@ const AllClasses = () => {
 
     if (isLoading) return <Loading />;
 
-    const totalPages = Math.ceil(allClasses.length / ITEMS_PER_PAGE);
-    const paginatedClasses = allClasses.slice(
+    // Sort logic
+    let sortedClasses = [...allClasses];
+    if (sortOption === 'high-to-low') {
+        sortedClasses.sort((a, b) => b.price - a.price);
+    } else if (sortOption === 'low-to-high') {
+        sortedClasses.sort((a, b) => a.price - b.price);
+    };
+
+    const totalPages = Math.ceil(sortedClasses.length / ITEMS_PER_PAGE);
+    const paginatedClasses = sortedClasses.slice(
         (currentPage - 1) * ITEMS_PER_PAGE,
         currentPage * ITEMS_PER_PAGE
     );
@@ -35,12 +44,19 @@ const AllClasses = () => {
             </Helmet>
 
             <div className='mb-5'>
-                <details className="dropdown">
+                {/* Filter Dropdown */}
+                <details className="dropdown mb-4">
                     <summary className="btn m-1">Filter <IoMdOptions /></summary>
-                    <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                        <li><a>Default</a></li>
-                        <li><a>Price High to Low</a></li>
-                        <li><a>Price Low to High</a></li>
+                    <ul className="menu dropdown-content bg-base-100 rounded-box z-10 w-52 p-2 shadow-sm">
+                        <li>
+                            <button onClick={() => setSortOption('default')}>Default</button>
+                        </li>
+                        <li>
+                            <button onClick={() => setSortOption('high-to-low')}>Price High to Low</button>
+                        </li>
+                        <li>
+                            <button onClick={() => setSortOption('low-to-high')}>Price Low to High</button>
+                        </li>
                     </ul>
                 </details>
             </div>

@@ -65,9 +65,9 @@ const Profile = () => {
             </Helmet>
             <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-indigo-500 to-blue-600 p-6 text-center text-white">
+                <div className="bg-accent p-6 text-center text-white">
                     <img
-                        src={formData?.photo || 'https://via.placeholder.com/120'}
+                        src={user?.photoURL || 'https://img.freepik.com/premium-psd/user-3d-icon_161669-542.jpg?w=1060'}
                         alt="Profile"
                         className="w-28 h-28 rounded-full mx-auto border-4 border-white shadow-md object-cover"
                     />

@@ -45,7 +45,7 @@ const FeedbackSection = () => {
         }}
       >
         {feedbacks.map(({ _id, student, image, className, comment, rating }) => (
-          <SwiperSlide key={_id} className="bg-white p-6 rounded-lg shadow-md my-2">
+          <SwiperSlide key={_id} className="bg-base-200 p-6 rounded-lg shadow-md my-2">
             <div className="flex items-center gap-4 mb-4">
               <img
                 src={image || "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?t=st=1753123007~exp=1753126607~hmac=3ac9fba701468e51f6fcc2db04f7c865d4f97fd0a7d39013b78c212dffa811dc&w=826"}
@@ -57,7 +57,7 @@ const FeedbackSection = () => {
                 <p className="text-sm text-gray-500">{className}</p>
               </div>
             </div>
-            <p className="mb-4 text-gray-700 italic h-20">"{comment}"</p>
+            <p className="mb-4 text-gray-500 italic h-20">"{comment}"</p>
             <div className="flex gap-1 text-yellow-400">
               {[...Array(rating)].map((_, i) => (
                 <FaStar key={i} />

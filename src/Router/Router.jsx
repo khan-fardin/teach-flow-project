@@ -25,6 +25,8 @@ import TeacherRoute from "../Routes/TeacherRoute";
 import Loading from "../Pages/Loading";
 import ErrorPage from "../Pages/ErrorPage";
 import ClassProgressAdmin from "../Pages/DashboardLayoutPages/ClassProgressAdmin";
+import ContactUs from "../Pages/MainLayoutPages/ContactUs";
+import About from "../Pages/MainLayoutPages/About";
 
 export const router = createBrowserRouter([
     {
@@ -42,10 +44,16 @@ export const router = createBrowserRouter([
                 Component: AllClasses,
             },
             {
+                path: '/about-us',
+                Component: About,
+            },
+            {
+                path: '/contact-us',
+                Component: ContactUs,
+            },
+            {
                 path: '/class-details/:id',
-                element: <PrivateRoute>
-                    <ClassDetails />
-                </PrivateRoute>,
+                element: <ClassDetails />,
             },
             {
                 path: 'payment/:classId',

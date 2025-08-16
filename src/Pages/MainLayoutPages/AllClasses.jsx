@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Loading from '../Loading';
+import { IoMdOptions } from "react-icons/io";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -32,9 +33,21 @@ const AllClasses = () => {
             <Helmet>
                 <title>All Classes | TeachFlow</title>
             </Helmet>
+
+            <div className='mb-5'>
+                <details className="dropdown">
+                    <summary className="btn m-1">Filter <IoMdOptions /></summary>
+                    <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                        <li><a>Default</a></li>
+                        <li><a>Price High to Low</a></li>
+                        <li><a>Price Low to High</a></li>
+                    </ul>
+                </details>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {paginatedClasses.map(cls => (
-                    <div key={cls._id} className="card bg-white shadow-lg rounded-xl overflow-hidden transition hover:shadow-xl">
+                    <div key={cls._id} className="card bg-accent-content shadow-lg rounded-xl overflow-hidden transition hover:shadow-xl">
                         <img src={cls.image} className="h-48 w-full object-cover" alt={cls.title} />
                         <div className="p-4">
                             <h2 className="text-xl font-bold text-gray-800 h-15">{cls.title}</h2>

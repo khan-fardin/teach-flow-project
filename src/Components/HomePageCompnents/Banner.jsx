@@ -35,7 +35,7 @@ const Banner = () => {
   }, [slides.length]);
 
   return (
-    <div className="relative w-full h-[500px] md:h-[600px] overflow-hidden rounded-xl shadow-lg">
+    <div className="relative w-full h-[500px] md:h-[600px] overflow-hidden lg:rounded-xl shadow-lg">
       {/* Slides */}
       <div
         className="flex transition-transform duration-700 ease-in-out"

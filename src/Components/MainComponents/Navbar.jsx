@@ -8,12 +8,15 @@ import { FaUser } from 'react-icons/fa6';
 
 const Navbar = () => {
 
-    const { user, logOutUser } = useAuth(); console.log(user)
+    const { user, logOutUser } = useAuth();
 
     const links = <>
         <li><NavLink to='/' className={({ isActive }) => isActive ? 'font-semibold rounded-[0] border-b-2' : 'font-semibold rounded-[0]'}>Home</NavLink></li>
         <li><NavLink to='/all-classes' className={({ isActive }) => isActive ? 'font-semibold rounded-[0] border-b-2' : 'font- rounded-[0]'}>All Classes</NavLink></li>
-        <li><NavLink to='/be-a-teacher' className={({ isActive }) => isActive ? 'font-semibold rounded-[0] border-b-2' : 'font- rounded-[0]'}>Teach on TeachFlow</NavLink></li>
+        {user && <li><NavLink to='/be-a-teacher' className={({ isActive }) => isActive ? 'font-semibold rounded-[0] border-b-2' : 'font- rounded-[0]'}>Teach on TeachFlow</NavLink></li>}
+        {user && <li><NavLink to='/dashboard' className={({ isActive }) => isActive ? 'font-semibold rounded-[0] border-b-2' : 'font- rounded-[0]'}>Dashboard</NavLink></li>}
+        <li><NavLink to='/about-us' className={({ isActive }) => isActive ? 'font-semibold rounded-[0] border-b-2' : 'font- rounded-[0]'}>About Us</NavLink></li>
+        <li><NavLink to='/contact' className={({ isActive }) => isActive ? 'font-semibold rounded-[0] border-b-2' : 'font- rounded-[0]'}>Contact</NavLink></li>
     </>
 
     const handleLogout = () => {
@@ -37,7 +40,7 @@ const Navbar = () => {
     };
 
     return (
-        <div>
+        <div className='sticky top-0 z-10'>
             <div className="navbar bg-base-200 rounded-2xl my-5 p-5">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -99,7 +102,7 @@ const Navbar = () => {
                                     tabIndex={0}
                                     className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow space-y-2.5">
                                     <li><a className='text-xl font-medium flex items-center gap-2.5'><FaUser /> {user.displayName}</a></li>
-                                    <li><Link to='/dashboard' className='btn'>Dashboard</Link></li>
+                                    {/* <li><Link to='/dashboard' className='btn'>Dashboard</Link></li> */}
                                     <li><div onClick={handleLogout} className='btn btn-error'>Logout</div></li>
                                 </ul>
                             </div>
